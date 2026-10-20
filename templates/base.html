@@ -1,0 +1,52 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}مدیا استور{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="site-shell is-dark" id="app">
+    <header class="topbar">
+        <a class="brand" href="#home">
+            <span class="brand-mark">▣</span>
+            <span>Media<span class="brand-dot">.</span>Store</span>
+        </a>
+        <nav id="nav">
+            <a class="active" href="#home">خانه</a>
+            <a href="#services">خدمات تعمیر</a>
+            <a href="#shop">فروشگاه</a>
+            <a href="#partner">همکاری با ما</a>
+            <a href="#contact">تماس با ما</a>
+        </nav>
+        <div class="header-actions">
+            <button class="icon-button" id="themeToggle" aria-label="تغییر حالت">☼</button>
+            <button class="menu-button" id="menuToggle">☰</button>
+        </div>
+    </header>
+
+    {% if messages %}
+    <div class="section-wrap" style="padding-top:16px;">
+        {% for message in messages %}
+            <div style="background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:12px 18px;margin-bottom:8px;font-size:13px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer>
+        <span>مدیا استور</span>
+        <span>تعمیرات تخصصی موبایل با استاندارد نوا</span>
+        <span>© ۱۴۰۵ مدیا استور</span>
+    </footer>
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

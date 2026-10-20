@@ -1,0 +1,4 @@
+Django>=5.0,<5.1
+django-environ>=0.11
+pytest>=7.4
+pytest-django>=4.7

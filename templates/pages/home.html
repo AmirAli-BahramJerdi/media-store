@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}مدیا استور | تعمیرات تخصصی موبایل{% endblock %}
+
+{% block content %}
+
+<!-- ============ HERO ============ -->
+<section class="hero section-wrap" id="home">
+    <div class="hero-copy">
+        <div class="eyebrow">✦ تعمیر، ساده‌تر از همیشه</div>
+        <h1>گوشی‌تو به<br><span>ما بسپار.</span></h1>
+        <p>تعمیر تخصصی موبایل با قطعات اصلی، قیمت شفاف و ضمانت معتبر. همین امروز به ما سر بزن.</p>
+        <div class="hero-buttons">
+            <a href="#track" class="primary-button">پیگیری سفارش ←</a>
+            <a href="#shop" class="text-button">مشاهده محصولات ↖</a>
+        </div>
+        <div class="trust-row">
+            <span>ضمانت ۶ ماهه</span>
+            <span>قطعات اصلی</span>
+            <span>ارسال رایگان</span>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="phone-art">
+            <div class="phone-screen"><span>MediaStore</span>
+                <div class="screen-line"></div>
+                <div class="screen-line small"></div>
+            </div>
+        </div>
+        <div class="floating-card quality">
+            <span class="check-icon">✓</span>
+            <div><b>تعمیر تضمینی</b><small>با خیال راحت بسپار</small></div>
+        </div>
+        <div class="floating-card speed">◷<div><b>تحویل سریع</b><small>کمتر از ۲ ساعت</small></div></div>
+    </div>
+</section>
+
+<!-- ============ TRACK ============ -->
+<section class="track-section section-wrap" id="track">
+    <div class="section-heading">
+        <div>
+            <span class="section-kicker">همیشه در جریان باش</span>
+            <h2>سفارش خودت را <span>پیگیری کن</span></h2>
+        </div>
+        <p>شماره موبایلی که هنگام تحویل دستگاه به ما دادی را وارد کن تا آخرین وضعیت تعمیر را ببینی.</p>
+    </div>
+
+    <form class="track-form" id="trackForm" novalidate>
+        <div class="input-wrap">⌕
+            <input id="trackPhone" type="tel" placeholder="مثلاً ۰۹۱۲۳۴۵۶۷۸۹" autocomplete="tel">
+        </div>
+        <button class="primary-button" type="submit">پیگیری سفارش ⌕</button>
+    </form>
+
+    <div class="track-error" id="trackError" hidden></div>
+
+    <div class="tracking-result" id="trackingResult" hidden>
+        <div class="result-top">
+            <span class="status-pill"><i></i> <span id="trackStatus">—</span></span>
+            <b id="trackId">سفارش #—</b>
+        </div>
+        <div class="progress-line"><span id="trackProgress"></span></div>
+        <div class="result-meta">
+            <span id="trackDevice">مدل: —</span>
+            <span id="trackETA"></span>
+        </div>
+
+        <!-- Steps filled dynamically by JS -->
+        <div class="track-steps" id="trackSteps"></div>
+    </div>
+</section>
+
+<!-- ============ SHOP ============ -->
+<section id="shop" class="shop-section section-wrap">
+    <div class="shop-toolbar">
+        <div class="shop-toolbar-main">
+            <span class="section-kicker">فروشگاه نوا</span>
+            <h2>چیزهای خوب برای <span>گوشی تو</span></h2>
+            <p>لوازم جانبی منتخب با ضمانت اصالت و ارسال سریع.</p>
+        </div>
+        <div class="shop-toolbar-badge">
+            <span class="badge-dot"></span>
+            <div>
+                <b>{{ products|length }} محصول</b>
+                <small>موجود در فروشگاه</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="shop-filters" role="tablist">
+        <button type="button" class="filter-button active" data-filter="all">همه</button>
+        <button type="button" class="filter-button" data-filter="protection">محافظ صفحه</button>
+        <button type="button" class="filter-button" data-filter="accessory">لوازم جانبی</button>
+        <button type="button" class="filter-button" data-filter="audio">صوتی</button>
+    </div>
+
+    <div class="products-grid">
+        {% for product in products %}
+        <article class="product-card" data-category="{{ product.category }}">
+            <div class="product-image {% if not product.has_image %}{{ product.css_class }}{% else %}has-photo{% endif %}">
+                {% if product.has_image %}
+                    <img class="product-photo" 
+                        src="{{ product.image.url }}" 
+                        alt="{{ product.name }}" 
+                        loading="lazy">
+                {% else %}
+                    <span class="product-symbol">{{ product.image_symbol }}</span>
+                {% endif %}
+                <span class="product-shine"></span>
+            </div>
+            <div class="product-info">
+                <span class="product-tag">{{ product.get_category_display }}</span>
+                <h3>{{ product.name }}</h3>
+                <div class="product-bottom">
+                    <b>{{ product.price }}</b>
+                    <small>تومان</small>
+                </div>
+            </div>
+        </article>
+        {% empty %}
+        <div class="shop-empty">
+            <span>◌</span>
+            <p>محصولی برای نمایش وجود ندارد.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ PARTNER ============ -->
+<section id="partner" class="partner-section section-wrap">
+    <div>
+        <span class="section-kicker">همکاری با نوا</span>
+        <h2>با هم، بهتر <span>می‌سازیم.</span></h2>
+        <p>اگر فروشگاه موبایل، تعمیرکار یا فعال حوزه تکنولوژی هستی، جای تو در شبکه مدیا استور خالی است.</p>
+        <a href="#contact" class="primary-button">تماس برای همکاری ←</a>
+    </div>
+    <div class="partner-stats">
+        <div><strong>+۱۸۰</strong><span>همکار فعال</span></div>
+        <div><strong>+۲۴K</strong><span>دستگاه تعمیر شده</span></div>
+        <div><strong>۹۸٪</strong><span>رضایت مشتری</span></div>
+    </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact-section section-wrap">
+    <div>
+        <span class="section-kicker">ما را پیدا کن</span>
+        <h2>مدیا استور، <span>نزدیک تو.</span></h2>
+        <p>کرمان، خیابان حافظ بین کوچه ۵ و ۷</p>
+
+        <div class="contact-coords">
+            <span>⌖</span> 30.2954073, 57.0614140
+        </div>
+
+        <div class="routing-buttons">
+            <a class="routing-btn routing-google"
+               href="https://www.google.com/maps/search/?api=1&query=30.29540733450169,57.06141398571191"
+               target="_blank" rel="noopener">
+                <span class="routing-icon">G</span>
+                <span class="routing-label">
+                    <b>گوگل مپ</b>
+                    <small>مسیریابی در Google Maps</small>
+                </span>
+            </a>
+
+            <a class="routing-btn routing-neshan"
+               href="https://nshn.ir/?lat=30.29540733450169&lng=57.06141398571191"
+               target="_blank" rel="noopener">
+                <span class="routing-icon">ن</span>
+                <span class="routing-label">
+                    <b>نشان</b>
+                    <small>مسیریابی در نشان</small>
+                </span>
+            </a>
+
+            <a class="routing-btn routing-balad"
+               href="https://balad.ir/?lat=30.29540733450169&lng=57.06141398571191"
+               target="_blank" rel="noopener">
+                <span class="routing-icon">ب</span>
+                <span class="routing-label">
+                    <b>بلد</b>
+                    <small>مسیریابی در بلد</small>
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="map-card">
+        <iframe
+            class="map-iframe"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=57.0564%2C30.2924%2C57.0664%2C30.2984&amp;layer=mapnik&amp;marker=30.29540733450169%2C57.06141398571191"
+            title="نقشه مدیا استور"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+        </iframe>
+        <div class="map-label"><b>مدیا استور</b><small>کرمان، حافظ</small></div>
+    </div>
+</section>
+
+{% endblock %}
